@@ -6,6 +6,7 @@ const sequelize = new Sequelize({
     storage: './mydb.sqlite',
     logging: false
 });
+const Op = Sequelize.Op;
 
 const User = sequelize.define('user',{
   id: {
@@ -39,12 +40,15 @@ const Transaction = sequelize.define('transaction', {
   syncState: {
     type: Sequelize.INTEGER
   }
+}, {
+  underscored: true
 });
 
+User.hasMany(Transaction);
 sequelize.sync();//{force: true});
 //User.sync();
 //Transaction.sync();
 
 module.exports = {
-  User, Transaction
+  User, Transaction, Op, Sequelize
 };
